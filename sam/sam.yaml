@@ -6,7 +6,7 @@ Resources:
     Type: "AWS::Cognito::UserPool"
     Properties:
       UserPoolName: CognitoAPIGWAngular
-  CognitoUserPoolClient:    
+  CognitoUserPoolClient:
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
         ClientName: myApp
@@ -16,7 +16,7 @@ Resources:
     Type: "AWS::Cognito::IdentityPool"
     Properties:
       IdentityPoolName: !Ref AWS::StackName
-      CognitoIdentityProviders: 
+      CognitoIdentityProviders:
         -
           ClientId: !Ref CognitoUserPoolClient
           ProviderName: !GetAtt CognitoUserPool.ProviderName
@@ -61,7 +61,7 @@ Resources:
                         : \"list\",\n  \"payload\":{    \n      \"FilterExpression\" : \"userId\
                         \ = :this_id\",\n      \"ExpressionAttributeValues\" : {\":this_id\" :\
                         \ \"$context.identity.cognitoIdentityId\"}\n    }\n}"
-                    uri: 
+                    uri:
                       Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CognitoDemoFunction.Arn}/invocations
                     passthroughBehavior: "when_no_templates"
                     httpMethod: "POST"
@@ -96,7 +96,7 @@ Resources:
                         \          \"email\" : \"$inputRoot.email\",\n          \"provider\" :\
                         \ \"Cognito User Pools with Cognito Identity Federation\"\n          }\n\
                         \  }\n}"
-                    uri: 
+                    uri:
                       Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CognitoDemoFunction.Arn}/invocations
                     passthroughBehavior: "when_no_templates"
                     httpMethod: "POST"
@@ -160,7 +160,7 @@ Resources:
                         \ : \"$context.authorizer.claims.family_name\",\n          \"email\" :\
                         \ \"$context.authorizer.claims.email\"\n          \n          }\n  }\n\
                         }"
-                    uri: 
+                    uri:
                       Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CognitoDemoFunction.Arn}/invocations
                     passthroughBehavior: "when_no_templates"
                     httpMethod: "POST"
@@ -222,7 +222,7 @@ Resources:
                         : \"list\",\n  \"payload\":{    \n      \"FilterExpression\" : \"userId\
                         \ = :this_id\",\n      \"ExpressionAttributeValues\" : {\":this_id\" :\
                         \ \"$context.authorizer.claims.sub\"}\n    }\n}"
-                    uri: 
+                    uri:
                       Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CognitoDemoFunction.Arn}/invocations
                     passthroughBehavior: "when_no_templates"
                     httpMethod: "POST"
@@ -256,7 +256,7 @@ Resources:
                         ,\n          \"surname\" : \"$context.authorizer.claims.family_name\"\
                         ,\n          \"email\" : \"$context.authorizer.claims.email\",\n     \
                         \     \"provider\" : \"Cognito User Pools\"\n          }\n  }\n}"
-                    uri: 
+                    uri:
                       Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CognitoDemoFunction.Arn}/invocations
                     passthroughBehavior: "when_no_templates"
                     httpMethod: "POST"
@@ -318,7 +318,7 @@ Resources:
                         : \"list\",\n  \"payload\":{    \n      \"FilterExpression\" : \"userId\
                         \ = :this_id\",\n      \"ExpressionAttributeValues\" : {\":this_id\" :\
                         \ \"$context.identity.cognitoIdentityId\"}\n    }\n}"
-                    uri: 
+                    uri:
                       Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CognitoDemoFunction.Arn}/invocations
                     passthroughBehavior: "when_no_templates"
                     httpMethod: "POST"
@@ -352,7 +352,7 @@ Resources:
                         $inputRoot.name\",\n          \"surname\" : \"$inputRoot.surname\",\n\
                         \          \"email\" : \"$inputRoot.email\",\n          \"provider\":\
                         \ \"Google\"\n          }\n  }\n}"
-                    uri: 
+                    uri:
                       Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${CognitoDemoFunction.Arn}/invocations
                     passthroughBehavior: "when_no_templates"
                     httpMethod: "POST"
@@ -411,10 +411,10 @@ Resources:
     Properties:
       Handler: index.handler
       Runtime: nodejs4.3
-      CodeUri: s3://<S3 BUCKET>/lambda.zip
+      CodeUri: s3://agnomia-aws-tutorial/lambda.zip
       Policies: AmazonDynamoDBFullAccess
-      Environment: 
-        Variables: 
+      Environment:
+        Variables:
           TABLE_NAME: !Ref Table
       Events:
         CipGet:
@@ -422,49 +422,49 @@ Resources:
           Properties:
             Path: /cip
             Method: GET
-            RestApiId: 
+            RestApiId:
                 Ref: CognitoDemoApi
         CipPost:
           Type: Api
           Properties:
             Path: /cip
             Method: POST
-            RestApiId: 
+            RestApiId:
                 Ref: CognitoDemoApi
         CipInfoGet:
           Type: Api
           Properties:
             Path: /cip/info
             Method: GET
-            RestApiId: 
+            RestApiId:
                 Ref: CognitoDemoApi
         CupGet:
           Type: Api
           Properties:
             Path: /cup
             Method: GET
-            RestApiId: 
+            RestApiId:
                 Ref: CognitoDemoApi
         CupPost:
           Type: Api
           Properties:
             Path: /cup
             Method: POST
-            RestApiId: 
+            RestApiId:
                 Ref: CognitoDemoApi
         GoogleGet:
           Type: Api
           Properties:
             Path: /google
             Method: GET
-            RestApiId: 
+            RestApiId:
                 Ref: CognitoDemoApi
         GooglePost:
           Type: Api
           Properties:
             Path: /google
             Method: POST
-            RestApiId: 
+            RestApiId:
                 Ref: CognitoDemoApi
   Table:
     Type: AWS::DynamoDB::Table
@@ -480,77 +480,77 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
-  GoogleRole: 
+  GoogleRole:
     Type: "AWS::IAM::Role"
-    Properties: 
-      AssumeRolePolicyDocument: 
+    Properties:
+      AssumeRolePolicyDocument:
         Version: "2012-10-17"
-        Statement: 
-          - 
+        Statement:
+          -
             Effect: "Allow"
-            Principal: 
-              Federated: 
+            Principal:
+              Federated:
                 - "cognito-identity.amazonaws.com"
-            Action: 
+            Action:
               - "sts:AssumeRoleWithWebIdentity"
             Condition:
               StringEquals:
-                cognito-identity.amazonaws.com:aud: 
+                cognito-identity.amazonaws.com:aud:
                 - !Ref CognitoIdPool
               ForAnyValue:StringLike:
                 cognito-identity.amazonaws.com:amr:
                 - "authenticated"
       Path: "/"
-      Policies: 
-        - 
+      Policies:
+        -
           PolicyName: "CognitoAPIGWAngularGoogle"
-          PolicyDocument: 
+          PolicyDocument:
             Version: "2012-10-17"
-            Statement: 
-              - 
+            Statement:
+              -
                 Effect: "Allow"
                 Action: "execute-api:Invoke"
-                Resource: 
+                Resource:
                 - !Join [ "/", [!Join [ ":", [ "arn:aws:execute-api",!Ref 'AWS::Region',!Ref 'AWS::AccountId',!Ref CognitoDemoApi]], "*/GET/google"]]
                 - !Join [ "/", [!Join [ ":", [ "arn:aws:execute-api",!Ref 'AWS::Region',!Ref 'AWS::AccountId',!Ref CognitoDemoApi]], "*/POST/google"]]
-  CUPGroupRole: 
+  CUPGroupRole:
     Type: "AWS::IAM::Role"
-    Properties: 
-      AssumeRolePolicyDocument: 
+    Properties:
+      AssumeRolePolicyDocument:
         Version: "2012-10-17"
-        Statement: 
-          - 
+        Statement:
+          -
             Effect: "Allow"
-            Principal: 
-              Federated: 
+            Principal:
+              Federated:
                 - "cognito-identity.amazonaws.com"
-            Action: 
+            Action:
               - "sts:AssumeRoleWithWebIdentity"
             Condition:
               StringEquals:
-                cognito-identity.amazonaws.com:aud: 
+                cognito-identity.amazonaws.com:aud:
                 - !Ref CognitoIdPool
               ForAnyValue:StringLike:
                 cognito-identity.amazonaws.com:amr:
                 - "authenticated"
       Path: "/"
-      Policies: 
-        - 
+      Policies:
+        -
           PolicyName: "CognitoAPIGWAngularCIP"
-          PolicyDocument: 
+          PolicyDocument:
             Version: "2012-10-17"
-            Statement: 
-              - 
+            Statement:
+              -
                 Effect: "Allow"
                 Action: "execute-api:Invoke"
-                Resource: 
+                Resource:
                 - !Join [ "/", [!Join [ ":", [ "arn:aws:execute-api",!Ref 'AWS::Region',!Ref 'AWS::AccountId',!Ref CognitoDemoApi]], "*/GET/cip"]]
                 - !Join [ "/", [!Join [ ":", [ "arn:aws:execute-api",!Ref 'AWS::Region',!Ref 'AWS::AccountId',!Ref CognitoDemoApi]], "*/POST/cip"]]
   GoogleRoleAttach:
     Type: "AWS::Cognito::IdentityPoolRoleAttachment"
     Properties:
       IdentityPoolId: !Ref CognitoIdPool
-      Roles: 
+      Roles:
         authenticated: !GetAtt GoogleRole.Arn
   CognitoCIPGroup:
     Type: "AWS::Cognito::UserPoolGroup"
@@ -571,7 +571,7 @@ Outputs:
         - '.amazonaws.com/demo'
   RestApiId:
     Description: API Gateway API ID
-    Value: !Ref CognitoDemoApi      
+    Value: !Ref CognitoDemoApi
   LamdbaFunction:
     Description: Lambda Function
     Value: !Ref CognitoDemoFunction
